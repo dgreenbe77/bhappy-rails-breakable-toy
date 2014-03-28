@@ -1,0 +1,113 @@
+<p id="notice"><%= notice %></p>
+
+<script type='text/javascript' src='jsapi'></script>
+<script type='text/javascript'>
+  google.load('visualization', '1', {'packages':['annotatedtimeline']});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'Pic');
+    data.addColumn('number', 'Health');
+    data.addColumn('number', 'Wealth');
+    data.addColumn('number', 'Culture');
+    data.addColumn('number', 'Location');
+    data.addColumn('number', 'Spirit');
+    data.addColumn('number', 'Relations');
+    data.addColumn('number', 'Activity');
+    data.addColumn('number', 'Passion');
+    data.addColumn('number', 'Comfort');
+    data.addColumn('number', 'View');
+
+    var date = gon.date;
+    var info = gon.infos;
+    function parseDate(input) {
+      var parts = input.match(/(\d+)/g);
+      return new Date(parts[0], parts[1]-1, parts[2]);
+    }
+    var health = gon.health;
+    info.forEach( function (arrayItem) {
+      for (var i in date) {
+        data.addRows([
+         [parseDate(date[i]), arrayItem['smile'], arrayItem['health'], arrayItem['wealth'], arrayItem['culture'], arrayItem['location'], arrayItem['spirituality'], arrayItem['relationship'], arrayItem['activity'], arrayItem['passion'], arrayItem['satisfaction'], arrayItem['self_view']]
+         ]);
+      }
+    });
+
+    var options = {
+      colors: ['#e0440e', '#FFCC00'],
+      displayAnnotations: true
+    };
+
+    var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
+
+    chart.draw(data, options);
+  }
+</script>
+
+<div id='chart_div' style='width: 1000px; height: 540px;'></div>
+
+<p><%= @response.body["face"] %></p>
+
+<p>
+  <strong>Infos:</strong>
+  <%= @infos.map(&:serializable_hash)%>
+</p>
+
+<p>
+  <strong>Smile:</strong>
+  <%= @info.smile %>
+</p>
+
+<p>
+  <strong>Health:</strong>
+  <%= @info.health %>
+</p>
+
+<p>
+  <strong>Wealth:</strong>
+  <%= @info.wealth %>
+</p>
+
+<p>
+  <strong>Culture:</strong>
+  <%= @info.culture %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @info.location %>
+</p>
+
+<p>
+  <strong>Spirituality:</strong>
+  <%= @info.spirituality %>
+</p>
+
+<p>
+  <strong>Relationships:</strong>
+  <%= @info.relationship %>
+</p>
+
+<p>
+  <strong>Activity:</strong>
+  <%= @info.activity %>
+</p>
+
+<p>
+  <strong>Passion:</strong>
+  <%= @info.passion %>
+</p>
+
+<p>
+  <strong>Satisfaction:</strong>
+  <%= @info.satisfaction %>
+</p>
+
+<p>
+  <strong>Self view:</strong>
+  <%= @info.self_view %>
+</p>
+
+<%= link_to 'Edit', edit_info_path(@info) %> |
+<%= link_to 'Back', infos_path %>

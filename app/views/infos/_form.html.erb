@@ -1,0 +1,70 @@
+<%= form_for(@info) do |f| %>
+  <% if @info.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@info.errors.count, "error") %> prohibited this info from being saved:</h2>
+
+      <ul>
+      <% @info.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.label :"Enter Image URL" %><br>
+  <%= f.text_field :url %>
+  <% offset = rand(Question.count) %>
+  <div class="field">
+    <% healthq = Question.first(offset: offset).healthq %>
+    <%= f.label :"#{healthq}" %><br>
+    <%= f.select(:health, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="field">
+    <% wealthq = Question.first(offset: offset).wealthq %>
+    <%= f.label :"#{wealthq}" %><br>
+    <%= f.select(:wealth, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="field">
+    <% cultureq = Question.first(offset: offset).cultureq %>
+    <%= f.label :"#{cultureq}" %><br>
+    <%= f.select(:culture, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="field">
+    <% locationq = Question.first(offset: offset).locationq %>
+    <%= f.label :"#{locationq}" %><br>
+    <%= f.select(:location, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="field">
+    <% spiritualityq = Question.first(offset: offset).spiritualityq %>
+    <%= f.label :"#{spiritualityq}" %><br>
+    <%= f.select(:spirituality, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="field">
+    <% relationshipq = Question.first(offset: offset).relationshipq %>
+    <%= f.label :"#{relationshipq}" %><br>
+    <%= f.select(:relationship, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="field">
+    <% activityq = Question.first(offset: offset).activityq %>
+    <%= f.label :"#{activityq}" %><br>
+    <%= f.select(:activity, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="field">
+    <% passionq = Question.first(offset: offset).passionq %>
+    <%= f.label :"#{passionq}" %><br>
+    <%= f.select(:passion, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="field">
+    <% satisfactionq = Question.first(offset: offset).satisfactionq %>
+    <%= f.label :"#{satisfactionq}" %><br>
+    <%= f.select(:satisfaction, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="field">
+    <% self_viewq = Question.first(offset: offset).self_viewq %>
+    <%= f.label :"#{satisfactionq}" %><br>
+    <%= f.select(:self_view, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  </div>
+  <div class="actions">
+    <%= f.submit :"Find Happiness"%>
+  </div>
+<% end %>

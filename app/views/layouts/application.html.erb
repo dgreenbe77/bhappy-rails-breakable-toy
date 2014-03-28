@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bhappy - Chart Your Personal Path to Happiness</title>
+  <%= include_gon %>
+  <link rel="Icon" href="/images/star.png">
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+  <div class="sticky">
+  <nav class="top-bar" data-topbar>
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="/"><img src="/images/star.png" class="logo">BHappy</a></h1>
+    </li>
+  </ul>
+
+  <section class="top-bar-section">
+    <ul class="right">
+      <% if user_signed_in? %>
+        <li class="user"><%= current_user.email %></li>
+        <li class="active"><%= link_to "Sign Out", destroy_user_session_path, method: :delete%></li>
+      <% else %>
+        <li class="active"><%= link_to "Sign up", new_user_registration_path%></li>
+        <li class="active"><%= link_to "Sign In", new_user_session_path %></li>
+      <%end%>
+    </ul>
+
+    <ul class="left">
+      <li><a href="#">Chart</a></li>
+    </ul>
+  </section>
+</nav>
+
+ <p class="notice"><%= notice %></p>
+ <p class="alert"><%= alert %></p>
+
+<%= yield %>
+
+</body>
+
+</html>
