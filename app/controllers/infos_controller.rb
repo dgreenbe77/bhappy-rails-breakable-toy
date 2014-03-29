@@ -2,7 +2,12 @@ class InfosController < ApplicationController
   before_action :set_info, only: [:show, :edit, :update, :destroy]
 
   def index
-    @infos = Info.all.order(created_at: :desc)
+    @user = current_user
+    if user_signed_in?
+      @infos = @user.infos.order(created_at: :desc)
+    else
+      @infos = []
+    end
   end
 
   def show
