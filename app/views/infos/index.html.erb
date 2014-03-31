@@ -1,137 +1,68 @@
-<div id='wrapper'>
+<div class="media">
+  <span class="twitter">
+    <a href="https://twitter.com/dgreenbe77" class="twitter-follow-button" data-show-count="true">Follow @dgreenbe77</a>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://bhappy.herokuapp.com" data-text="Bhappy">Tweet</a>
+  </span>
+  <div class="fb-like" data-href="http://bhappy.herokuapp.com" data-send="false" data-layout="button_count" data-show-faces="false"></div>
+</div>
 
-  <div class="media">
-    <span class="twitter">
-      <a href="https://twitter.com/dgreenbe77" class="twitter-follow-button" data-show-count="true">Follow @dgreenbe77</a>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://bhappy.herokuapp.com" data-text="Bhappy">Tweet</a>
-    </span>
-    <div class="fb-like" data-href="http://bhappy.herokuapp.com" data-send="false" data-layout="button_count" data-show-faces="false"></div>
-  </div>
+<div class="large-4 medium-4 columns" id="smiley">
+  <h1 class="eye1">.</h1>
+  <h1 class="eye2">.</h1>
+  <h1 class="mouth">)</h1>
+  <div class="circle"></div>
+</div>
 
-  <div class = "large-12 medium-12 columns" id = "smiley">
-    <h1 class="eye1">.</h1>
-    <h1 class="eye2">.</h1>
-    <h1 class="mouth">)</h1>
-    <div class="circle"></div>
-  </div>
-     <%= link_to "Find Happiness", new_info_path, class: "happy large round button"%>
-  <div class = "center large-12 medium-12 columns">
-    <h1>Happy Entries</h1>
-      <tbody>
-        <%= render partial: 'info', collection: @infos %>
-      </tbody>
-    </table>
-    <br>
-  </div>
+<div class="birds" id="smileybirds">
+  <img src="/images/smileybird.png" class="bird1">
+  <img src="/images/smileybird1.png" class="bird2">
+  <img src="/images/smileybird2.png" class="bird3">
+</div>
 
+<div class="large-3 medium-3 columns">
+  <img src="/images/cloud1.png" class="cloud1">
+  <img src="/images/cloud2.png" class="cloud2">
+  <img src="/images/cloud1.png" class="cloud3">
+  <img src="/images/cloud2.png" class="cloud4">
+  <img src="/images/cloud2.png" class="cloud5">
+  <img src="/images/cloud_cluster1.png" class="cloud_cluster1">
+  <img src="/images/cloud_cluster2.png" class="cloud_cluster2">
+</div>
 
+<div class = "large-3 medium-3 columns">
+ <%= link_to "Find Happiness", new_info_path, class: "happy large round button"%>
+</div>
+
+<div class = "center large-12 medium-12 columns">
+  <h1>Happy Entries</h1>
+  <tbody>
+    <%= render partial: 'info', collection: @infos %>
+  </tbody>
+</table>
+<br>
 </div>
 
 <script src = "social_media"></script>
-<script>
+
+<script type="text/javascript">
 var currentPos = 0;
-var smiley = document.getElementById("smiley");
+var birds = document.getElementById("smileybirds");
 var bodWidth = screen.availWidth;
-var carWidth = -220;
+var birdPos = -215;
 
-// smiley.x = screen.availWidth / 2;
-// smiley.y = screen.availHeight / 2;
+function move() {
+  if (currentPos < (bodWidth + 500)) {
 
+    currentPos = parseInt(birds.style.right ?
+      birds.style.right : birdPos) + 5;
 
-//movement
-// function move() {
-//   if (currentPos < (bodWidth + carWidth)) {
+    birds.style.right = currentPos + "px";
 
-//     setTimeout("move()", 20);
-//   }
-// }
-
-// Objects Logic
-var smiley = {
-  speed: 100
-};
-
-// Keyboard
-var keysDown = {};
-
-addEventListener('keydown', function (key) {
-    keysDown[key.keyCode] = true;
-}, false);
-
-addEventListener('keyup', function (key) {
-    delete keysDown[key.keyCode];
-}, false);
-
-
-
-// Reset
-var reset = function () {
-  smiley.x = screen.availWidth / 2;
-  smiley.y = screen.availHeight / 2;
-  // smiley.x = canvas.width / 2;
-  // smiley.y = canvas.height / 2;
-
-  // block.x = 20 + (Math.random() * (canvas.width - 40));
-  // block.y = 20 + (Math.random() * (canvas.height - 40));
-};
-
-// Update Objects
-var update = function (accelerator) {
-  if (37 in keysDown) {
-    smiley.x -= smiley.speed * accelerator;
-  }
-  if (39 in keysDown) {
-    smiley.x += smiley.speed * accelerator;
-  }
-  if (38 in keysDown) {
-    smiley.y -= smiley.speed * accelerator;
-  }
-  if (40 in keysDown) {
-    smiley.y += smiley.speed * accelerator;
+    setTimeout("move()", 20);
   }
 
-};
+}
 
-//Draw
-// var draw = function () {
-//   if (bgReady) {
-//     ctx.drawImage(bgImage, 0, 0);
-//   }
-
-//   if (smileyReady) {
-//     ctx.drawImage(smileyImage, smiley.x, smiley.y, smileyWidth, smileyLength);
-//   }
-
-//   if (blockReady) {
-//     ctx.drawImage(blockImage, block.x, block.y, blockWidth, blockLength);
-//   }
-//   if (32 in keys) {
-//     ctx.drawImage(rtfmImage, smiley.x, (smiley.y + (smileyWidth/4)));
-//   }
-
-// //Points
-//   ctx.fillStyle = "rgb(250, 250, 250)";
-//   ctx.font = "24px Helvetica";
-//   ctx.textAlign = "right";
-//   ctx.textBaseline = "top";
-//   ctx.fillText("Add More To The Smiley: " + blockCount);
-// };
-
-//Game Loop
-var main = function () {
-  var now = Date.now();
-  var delta = now - then;
-  update(delta / 100000);
-  draw();
-
-  then = now;
-};
-
-//Play
-reset();
-var then = Date.now();
-setInterval(main, 1); // Start game in 1
-
-
+move();
 </script>
 
