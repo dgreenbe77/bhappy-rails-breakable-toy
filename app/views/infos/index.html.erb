@@ -1,3 +1,6 @@
+<img src="/images/sky.png" class="bg">
+<img src="/images/happy_foreground.png" class="fg"> 
+
 <div class="media">
   <span class="twitter">
     <a href="https://twitter.com/dgreenbe77" class="twitter-follow-button" data-show-count="true">Follow @dgreenbe77</a>
@@ -6,15 +9,15 @@
   <div class="fb-like" data-href="http://bhappy.herokuapp.com" data-send="false" data-layout="button_count" data-show-faces="false"></div>
 </div>
 
-<div class = "large-3 medium-3 columns">
-
+<div class="logo_cloud">
+  <img src="/images/cloud1.png">
+  <h1 class="whole_logo"><a href="/"><img src="/images/smiley.png" class="logo">BHappy</a></h1>
 </div>
 
-<img src="/images/sky.png" class="bg">
-
-<div class="logo_cloud">
-      <img src="/images/cloud1.png">
-      <h1 class="whole_logo"><a href="/"><img src="/images/smiley.png" class="logo">BHappy</a></h1>
+<div class="birds" id="smileybirds">
+  <img src="/images/smileybird.png" class="bird1">
+  <img src="/images/smileybird1.png" class="bird2">
+  <img src="/images/smileybird2.png" class="bird3">
 </div>
 
 <div class="large-4 medium-4 columns" id="smiley">
@@ -34,14 +37,8 @@
   <img src="/images/cloud_cluster2.png" class="cloud_cluster2">
 </div>
 
-<div class="birds" id="smileybirds">
-  <img src="/images/smileybird.png" class="bird1">
-  <img src="/images/smileybird1.png" class="bird2">
-  <img src="/images/smileybird2.png" class="bird3">
-</div>
-
 <div class = "large-12 medium-12 columns">
-  <%= link_to "Find Happiness", new_info_path, class: "happy large round button"%>
+  <%= link_to "Find Happiness", new_info_path, class: " large round button happy"%>
   <div class="posts center">
   <h1>Happy Entries</h1>
       <%= render partial: 'info', collection: @infos %>

@@ -11,7 +11,6 @@ class InfosController < ApplicationController
   end
 
   def show
-    @info = Info.find(params[:id])
     @user = current_user
     @infos = @user.infos
     uri = URI::encode(@info.url)
@@ -22,14 +21,6 @@ class InfosController < ApplicationController
     gon.infos = @infos.map(&:serializable_hash)
     gon.date = @infos.pluck(:created_at).map {|time| time.strftime('%Y, %m, %d')}
     gon.health = @infos.pluck(:health)
-    # binding.pry
-    # def self.datafilter(field_name)
-    #   field_data = Array.new
-    #   @infos.each do |info|
-    #     field_data << {"#{field_name}" => info["#{field_name}"], "created_at" => info["created_at"]}
-    #   end
-    #   field_data
-    # end
   end
 
   def new
