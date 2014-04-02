@@ -1,11 +1,6 @@
 class CreateInfos < ActiveRecord::Migration
   def change
     create_table :infos do |t|
-      # t.float :happy
-      # t.float :control
-      # t.float :civilization
-      # t.float :drama
-      # t.float :reflectivity
       t.float :health
       t.float :wealth
       t.float :culture

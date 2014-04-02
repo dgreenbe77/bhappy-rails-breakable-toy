@@ -1,11 +1,13 @@
 Bhappy::Application.routes.draw do
   devise_for :users
-  resources :infos
+  resources :infos, path: 'happy'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'infos#index'
+
+  get 'logs' => 'infos#logs'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

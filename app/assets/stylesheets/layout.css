@@ -5,7 +5,7 @@
 }
 
 .happy {
-
+    box-shadow: 0px 0px 120px 40px white;
 }
 
 .logo_bird {
@@ -24,8 +24,10 @@
 
 .posts {
     position: fixed;
-    top: 1000px;
-    left: 230px;
+      top: 50%;
+      left: 30%;
+      margin-top: -50px;
+      margin-left: -100px;
 }
 
 .logo_cloud {

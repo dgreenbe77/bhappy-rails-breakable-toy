@@ -1,5 +1,7 @@
-<img src="/images/sky.png" class="bg">
-<img src="/images/happy_foreground.png" class="fg"> 
+<div class="background">
+  <img src="/images/sky.png" class="bg">
+  <img src="/images/happy_foreground.png" class="fg"> 
+</div>
 
 <div class="media">
   <span class="twitter">
@@ -39,33 +41,7 @@
 
 <div class = "large-12 medium-12 columns">
   <%= link_to "Find Happiness", new_info_path, class: " large round button happy"%>
-  <div class="posts center">
-  <h1>Happy Entries</h1>
-      <%= render partial: 'info', collection: @infos %>
-  <br>
-  </div>
 </div>
 
 <%= javascript_include_tag "social_media" %>
-
-<script type="text/javascript">
-  var currentPos = 0;
-  var birds = document.getElementById("smileybirds");
-  var bodWidth = screen.availWidth;
-  var birdPos = -215;
-
-  function move() {
-    if (currentPos < (bodWidth + 500)) {
-
-      currentPos = parseInt(birds.style.right ?
-        birds.style.right : birdPos) + 5;
-
-      birds.style.right = currentPos + "px";
-
-      setTimeout("move()", 20);
-    }
-  }
-
-  move();
-</script>
-
+<%= javascript_include_tag "move" %>

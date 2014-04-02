@@ -2,12 +2,6 @@ class InfosController < ApplicationController
   before_action :set_info, only: [:show, :edit, :update, :destroy]
 
   def index
-    @user = current_user
-    if user_signed_in?
-      @infos = @user.infos.order(created_at: :desc)
-    else
-      @infos = []
-    end
   end
 
   def show
@@ -21,6 +15,15 @@ class InfosController < ApplicationController
     gon.infos = @infos.map(&:serializable_hash)
     gon.date = @infos.pluck(:created_at).map {|time| time.strftime('%Y, %m, %d')}
     gon.health = @infos.pluck(:health)
+  end
+
+  def logs
+    @user = current_user
+    if user_signed_in?
+      @infos = @user.infos.order(created_at: :desc)
+    else
+      @infos = []
+    end
   end
 
   def new
