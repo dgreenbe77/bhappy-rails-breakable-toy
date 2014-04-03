@@ -11,6 +11,7 @@ var video = document.querySelector('#screenshot-stream');
 var button = document.querySelector('#screenshot-button');
 var canvas = document.querySelector('#screenshot-canvas');
 var img = document.querySelector('#screenshot');
+var imageInput = $('#info_image');
 var ctx = canvas.getContext('2d');
 var localMediaStream = null;
 
@@ -26,7 +27,9 @@ function sizeCanvas() {
 
 function snapshot() {
   ctx.drawImage(video, 0, 0);
-  img.src = canvas.toDataURL('image/webp');
+  var base64Image = canvas.toDataURL('image/webp');
+  img.src = base64Image;
+  imageInput.val(base64Image);
 }
 
 button.addEventListener('click', function(e) {

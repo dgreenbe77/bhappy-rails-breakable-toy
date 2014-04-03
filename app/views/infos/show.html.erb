@@ -47,7 +47,11 @@
 
 <div id='chart_div' style='width: 1000px; height: 540px;'></div>
 
+<br><br>
+
 <p><%= @response.body["face"] %></p>
+
+<%= filepicker_image_tag @info.image, w: 160, h: 160, fit: 'clip', class: 'center' %>
 
 <p>
   <strong>Infos:</strong>

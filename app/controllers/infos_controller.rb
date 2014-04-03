@@ -7,11 +7,12 @@ class InfosController < ApplicationController
   def show
     @user = current_user
     @infos = @user.infos
-    uri = URI::encode(@info.url)
+    uri = URI::encode(@info.image)
     @response = Unirest::get("https://faceplusplus-faceplusplus.p.mashape.com/detection/detect?url=#{uri}&attribute=glass%2Cpose%2Cgender%2Cage%2Crace%2Csmiling",
     headers:{
       "X-Mashape-Authorization" => "ddgSpWEIQ6z8NMuVzNHb1gD7MjJjfkyA"
     })
+    # <%= image_tag @info.image_url.to_s %>  
     gon.infos = @infos.map(&:serializable_hash)
     gon.date = @infos.pluck(:created_at).map {|time| time.strftime('%Y, %m, %d')}
     gon.health = @infos.pluck(:health)
@@ -84,7 +85,7 @@ class InfosController < ApplicationController
     end
 
     def info_params
-      params.require(:info).permit(:user_id, :happiness, :health, :wealth, :culture, :drama, :location, :spirituality, :relationship, :activity, :reflectivity, :civilization, :passion, :control, :satisfaction, :self_view, :url)
+      params.require(:info).permit(:image, :user_id, :happiness, :health, :wealth, :culture, :drama, :location, :spirituality, :relationship, :activity, :reflectivity, :civilization, :passion, :control, :satisfaction, :self_view, :url)
     end
 
 end

@@ -3,8 +3,13 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'
 
+gem 'filepicker-rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
+
+gem 'fog', '~> 1.21.0'
+
+gem 'carrierwave'
 
 gem 'unirest'
 # Use SCSS for stylesheets
@@ -34,10 +39,13 @@ group :doc do
 end
 
 group :development, :test do
-  gem 'pry'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'capybara'
   gem 'launchy'
+  gem 'factory_girl'
+  gem 'shoulda'
+  gem 'valid_attribute'
 end
 
 gem 'rails_12factor', group: :production
