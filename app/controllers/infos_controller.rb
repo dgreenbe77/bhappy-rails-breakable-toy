@@ -41,9 +41,9 @@ class InfosController < ApplicationController
 
   def create
     @info = Info.new(info_params)
-    FacialRecognition.api(@info)
     @user = current_user
     @user.infos << @info
+    FacialRecognition.api(@info)
     ['positive', 'negative', 'activity', 'culture', 'health', 'location', 'passion', 
      'relationship', 'satisfaction', 'self_view', 'spirituality', 'wealth'].each do |kind|
       WordAnalysis.word_analysis(@info, kind)

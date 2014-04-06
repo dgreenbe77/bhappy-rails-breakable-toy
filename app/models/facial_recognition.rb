@@ -8,6 +8,7 @@ class FacialRecognition
         "X-Mashape-Authorization" => "ddgSpWEIQ6z8NMuVzNHb1gD7MjJjfkyA"
       })
       face = @response.body["face"]
+      binding.pry
       info.smile = (face[0]["attribute"]["smiling"]["value"])/20
     end
   end
