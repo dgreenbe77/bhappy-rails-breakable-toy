@@ -14,8 +14,13 @@ class InfosController < ApplicationController
         "X-Mashape-Authorization" => "ddgSpWEIQ6z8NMuVzNHb1gD7MjJjfkyA"
       })
     end
+    @location = Location.new
     gon.infos = @infos.map(&:serializable_hash)
     gon.date = @infos.pluck(:created_at)
+    unless Location.first.blank?
+      gon.region = Location.last.region
+    end
+    gon.address = @info.address 
   end
 
   def logs

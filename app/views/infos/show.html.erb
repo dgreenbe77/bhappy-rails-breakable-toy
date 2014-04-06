@@ -59,12 +59,12 @@
 
   info.forEach( function (arrayItem) {
      data.addRows([
-       ["Milan", arrayItem['happy_scale'], arrayItem['location_scale']]
+       [arrayItem['address'], arrayItem['happy_scale'], arrayItem['location_scale']]
      ]);
   });
 
   var options = {
-    region: 'IT',
+    region: gon.region,
     displayMode: 'markers',
     colorAxis: {colors: ['green', 'blue']}
   };
@@ -80,11 +80,14 @@
 
 <br><br>
 
-<div id="map_div" style="width: 400px; height: 300;"></div>
-
-
+<div id="map_div" style="width: 600px; height: 600;"></div>
 
 <br><br>
+
+<%= simple_form_for(@location) do |r| %>
+  <%= r.select(:region, IsoCountryCodes.for_select) %>
+  <%= r.submit "Change Region" %>
+<% end %>
 
 <% unless @response.nil? %>
   <h1><%= @response.body["face"] %></h1>

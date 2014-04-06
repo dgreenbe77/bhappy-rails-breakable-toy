@@ -23,18 +23,25 @@
 </script>
 
   <div>
-    <%= f.label :image, "Upload Your Avatar:" %>
-    <%= f.filepicker_field :image, class: "round filepicker", onchange: 'helloWorld(event)', button_text: 'Add Image', dragdrop: true, drag_class: "round dragdrop", services: "COMPUTER, WEBCAM, FACEBOOK, INSTAGRAM, FLICKR, URL, IMAGE_SEARCH, DROPBOX, GMAIL, GOOGLE_DRIVE, BOX, SKYDRIVE, PICASA, GITHUB, EVERNOTE, ALFRESCO, FTP, WEBDAV" %>
+    <%= f.label :image, "Take or Upload Your Image for Facial Analysis:" %>
+    <%= f.filepicker_field :image, class: " filepicker", onchange: 'helloWorld(event)', button_text: 'Add Image', dragdrop: true, drag_class: "dragdrop", services: "COMPUTER, WEBCAM, FACEBOOK, INSTAGRAM, FLICKR, URL, IMAGE_SEARCH, DROPBOX, GMAIL, GOOGLE_DRIVE, BOX, SKYDRIVE, PICASA, GITHUB, EVERNOTE, ALFRESCO, FTP, WEBDAV" %>
   </div>
+
   <br>
 
   <% offset = rand(Question.count) %>
+
   <div>
     <%= f.label "#{Question.first(offset: offset).main_postq}" %>
     <%= f.text_area :main_post, rows: 20 %>
   </div>
   
-  <div class="actions">
+  <div>
+    <%= f.label "Enter Location / Address: " %>
+    <%= f.text_area :address %>
+  </div>
+
+  <div>
     <%= f.submit :"Find Happiness"%>
   </div>
 
