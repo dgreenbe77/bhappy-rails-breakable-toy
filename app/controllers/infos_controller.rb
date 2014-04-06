@@ -89,7 +89,7 @@ class InfosController < ApplicationController
     end
 
     def info_params
-      params.require(:info).permit(:main_post, :image, :user_id, :happiness, :health, :wealth, :culture, :drama, :location, :spirituality, :relationship, :activity, :reflectivity, :civilization, :passion, :control, :satisfaction, :self_view, :url)
+      params.require(:info).permit(:address, :main_post, :image)
     end
 
 end
