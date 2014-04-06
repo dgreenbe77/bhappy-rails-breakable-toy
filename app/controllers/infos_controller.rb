@@ -7,14 +7,15 @@ class InfosController < ApplicationController
   def show
     @user = current_user
     @infos = @user.infos
-    uri = URI::encode(@info.image)
-    @response = Unirest::get("https://faceplusplus-faceplusplus.p.mashape.com/detection/detect?url=#{uri}&attribute=glass%2Cpose%2Cgender%2Cage%2Crace%2Csmiling",
-    headers:{
-      "X-Mashape-Authorization" => "ddgSpWEIQ6z8NMuVzNHb1gD7MjJjfkyA"
-    })
-    # <%= image_tag @info.image_url.to_s %>  
+    unless @info.image.blank?
+      uri = URI::encode(@info.image)
+      @response = Unirest::get("https://faceplusplus-faceplusplus.p.mashape.com/detection/detect?url=#{uri}&attribute=glass%2Cpose%2Cgender%2Cage%2Crace%2Csmiling",
+      headers:{
+        "X-Mashape-Authorization" => "ddgSpWEIQ6z8NMuVzNHb1gD7MjJjfkyA"
+      })
+    end
     gon.infos = @infos.map(&:serializable_hash)
-    gon.date = @infos.pluck(:created_at).map {|time| time.strftime('%Y, %m, %d')}
+    gon.date = @infos.pluck(:created_at)
     gon.health = @infos.pluck(:health)
   end
 
@@ -36,17 +37,16 @@ class InfosController < ApplicationController
 
   def create
     @info = Info.new(info_params)
-    unless @info.url.blank?
-      uri = URI::encode(@info.url)
-      @response = Unirest::get("https://faceplusplus-faceplusplus.p.mashape.com/detection/detect?url=#{uri}&attribute=smiling",
-      headers:{
-        "X-Mashape-Authorization" => "ddgSpWEIQ6z8NMuVzNHb1gD7MjJjfkyA"
-      })
-      face = @response.body["face"]
-      @info.smile = (face[0]["attribute"]["smiling"]["value"])/20
-    end
+    FacialRecognition.api(@info)
     @user = current_user
     @user.infos << @info
+    ['positive', 'negative', 'activity', 'culture', 'health', 'location', 'passion', 
+     'relationship', 'satisfaction', 'self_view', 'spirituality', 'wealth'].each do |kind|
+      WordAnalysis.word_analysis(@info, kind)
+      @info["#{kind}_scale"] = WordAnalysis.convert_scale_by_deviation(@info, @user, kind)
+    end
+    @info.happy = @info.positive_scale - @info.negative_scale
+    @info.happy_scale = WordAnalysis.convert_scale_by_deviation(@info, @user, 'happy')
 
     respond_to do |format|
       if @info.save
@@ -85,7 +85,7 @@ class InfosController < ApplicationController
     end
 
     def info_params
-      params.require(:info).permit(:image, :user_id, :happiness, :health, :wealth, :culture, :drama, :location, :spirituality, :relationship, :activity, :reflectivity, :civilization, :passion, :control, :satisfaction, :self_view, :url)
+      params.require(:info).permit(:main_post, :image, :user_id, :happiness, :health, :wealth, :culture, :drama, :location, :spirituality, :relationship, :activity, :reflectivity, :civilization, :passion, :control, :satisfaction, :self_view, :url)
     end
 
 end

@@ -7,9 +7,7 @@ gem 'filepicker-rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
-gem 'fog', '~> 1.21.0'
-
-gem 'carrierwave'
+gem 'simple_form'
 
 gem 'unirest'
 # Use SCSS for stylesheets

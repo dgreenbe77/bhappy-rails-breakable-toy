@@ -6,8 +6,9 @@
   google.setOnLoadCallback(drawChart);
   function drawChart() {
     var data = new google.visualization.DataTable();
-    data.addColumn('date', 'Date');
-    data.addColumn('number', 'Pic');
+    data.addColumn('datetime', 'Date');
+    data.addColumn('number', 'Happy');   
+    data.addColumn('number', 'Img');
     data.addColumn('number', 'Health');
     data.addColumn('number', 'Wealth');
     data.addColumn('number', 'Culture');
@@ -18,25 +19,27 @@
     data.addColumn('number', 'Passion');
     data.addColumn('number', 'Comfort');
     data.addColumn('number', 'View');
+    data.addColumn('string', 'Post');
 
     var date = gon.date;
     var info = gon.infos;
-    function parseDate(input) {
-      var parts = input.match(/(\d+)/g);
-      return new Date(parts[0], parts[1]-1, parts[2]);
-    }
     var health = gon.health;
     info.forEach( function (arrayItem) {
       for (var i in date) {
         data.addRows([
-         [parseDate(date[i]), arrayItem['smile'], arrayItem['health'], arrayItem['wealth'], arrayItem['culture'], arrayItem['location'], arrayItem['spirituality'], arrayItem['relationship'], arrayItem['activity'], arrayItem['passion'], arrayItem['satisfaction'], arrayItem['self_view']]
+         [new Date(Date.parse(date[i])), arrayItem['happy_scale'], arrayItem['smile'], arrayItem['health_scale'], arrayItem['wealth_scale'], arrayItem['culture_scale'], arrayItem['location_scale'], arrayItem['spirituality_scale'], arrayItem['relationship_scale'], arrayItem['activity_scale'], arrayItem['passion_scale'], arrayItem['satisfaction_scale'], arrayItem['self_view_scale'], arrayItem['main_post']]
          ]);
       }
     });
 
     var options = {
       colors: ['#e0440e', '#FFCC00'],
-      displayAnnotations: true
+      displayAnnotations: true,
+      legendPosition: 'newRow',
+      max: 10,
+      wmode: 'opaque',
+      thickness: 2,
+      displayAnnotations: true,
     };
 
     var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
@@ -45,13 +48,20 @@
   }
 </script>
 
-<div id='chart_div' style='width: 1000px; height: 540px;'></div>
+<p> "hi" </p>
+<br>
+<div id='chart_div' style='width: 1200px; height: 640px;'></div>
 
 <br><br>
 
-<p><%= @response.body["face"] %></p>
+<% unless @response.nil? %>
+  <h1><%= @response.body["face"] %></h1>
+<% end %>
 
-<%= filepicker_image_tag @info.image, w: 160, h: 160, fit: 'clip', class: 'center' %>
+<% unless @info.image.blank? %>
+  <%= filepicker_image_tag @info.image, w: 400, h: 400, fit: 'clip', class: 'center' %>
+  <%= filepicker_save_button "Save", @info.image, "image/jpg" %>
+<% end %>
 
 <p>
   <strong>Infos:</strong>
@@ -65,52 +75,57 @@
 
 <p>
   <strong>Health:</strong>
-  <%= @info.health %>
+  <%= @info.happy_scale %>
+</p>
+
+<p>
+  <strong>Health:</strong>
+  <%= @info.health_scale %>
 </p>
 
 <p>
   <strong>Wealth:</strong>
-  <%= @info.wealth %>
+  <%= @info.wealth_scale %>
 </p>
 
 <p>
   <strong>Culture:</strong>
-  <%= @info.culture %>
+  <%= @info.culture_scale %>
 </p>
 
 <p>
   <strong>Location:</strong>
-  <%= @info.location %>
+  <%= @info.location_scale %>
 </p>
 
 <p>
   <strong>Spirituality:</strong>
-  <%= @info.spirituality %>
+  <%= @info.spirituality_scale %>
 </p>
 
 <p>
   <strong>Relationships:</strong>
-  <%= @info.relationship %>
+  <%= @info.relationship_scale %>
 </p>
 
 <p>
   <strong>Activity:</strong>
-  <%= @info.activity %>
+  <%= @info.activity_scale %>
 </p>
 
 <p>
   <strong>Passion:</strong>
-  <%= @info.passion %>
+  <%= @info.passion_scale %>
 </p>
 
 <p>
   <strong>Satisfaction:</strong>
-  <%= @info.satisfaction %>
+  <%= @info.satisfaction_scale %>
 </p>
 
 <p>
-  <strong>Self view:</strong>
-  <%= @info.self_view %>
+  <strong>Self View:</strong>
+  <%= @info.self_view_scale %>
 </p>
 
 <%= link_to 'Edit', edit_info_path(@info) %> |

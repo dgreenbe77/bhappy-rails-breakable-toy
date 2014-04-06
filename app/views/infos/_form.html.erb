@@ -13,73 +13,26 @@
     
   <% end %>
 
+<script>
+  function helloWorld(event){
+    var url = null;
+    file.forEach(function (array) { url = array['url']} )
+    debugger;
+  }
+</script>
+
   <div>
     <%= f.label :image, "Upload Your Avatar:" %>
-    <%= f.filepicker_field :image %>
+    <%= f.filepicker_field :image, class: "round filepicker", onchange: 'helloWorld(event)' %>
   </div>
+  <br>
 
   <% offset = rand(Question.count) %>
-
-  <div class="field">
-    <% healthq = Question.first(offset: offset).healthq %>
-    <%= f.label :"#{healthq}" %><br>
-    <%= f.select(:health, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
+  <div>
+    <%= f.label "#{Question.first(offset: offset).main_postq}" %>
+    <%= f.text_area :main_post, rows: 20 %>
   </div>
-
-  <div class="field">
-    <% wealthq = Question.first(offset: offset).wealthq %>
-    <%= f.label :"#{wealthq}" %><br>
-    <%= f.select(:wealth, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
-  </div>
-
-  <div class="field">
-    <% cultureq = Question.first(offset: offset).cultureq %>
-    <%= f.label :"#{cultureq}" %><br>
-    <%= f.select(:culture, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
-  </div>
-
-  <div class="field">
-    <% locationq = Question.first(offset: offset).locationq %>
-    <%= f.label :"#{locationq}" %><br>
-    <%= f.select(:location, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
-  </div>
-
-  <div class="field">
-    <% spiritualityq = Question.first(offset: offset).spiritualityq %>
-    <%= f.label :"#{spiritualityq}" %><br>
-    <%= f.select(:spirituality, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
-  </div>
-
-  <div class="field">
-    <% relationshipq = Question.first(offset: offset).relationshipq %>
-    <%= f.label :"#{relationshipq}" %><br>
-    <%= f.select(:relationship, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
-  </div>
-
-  <div class="field">
-    <% activityq = Question.first(offset: offset).activityq %>
-    <%= f.label :"#{activityq}" %><br>
-    <%= f.select(:activity, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
-  </div>
-
-  <div class="field">
-    <% passionq = Question.first(offset: offset).passionq %>
-    <%= f.label :"#{passionq}" %><br>
-    <%= f.select(:passion, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
-  </div>
-
-  <div class="field">
-    <% satisfactionq = Question.first(offset: offset).satisfactionq %>
-    <%= f.label :"#{satisfactionq}" %><br>
-    <%= f.select(:satisfaction, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
-  </div>
-
-  <div class="field">
-    <% self_viewq = Question.first(offset: offset).self_viewq %>
-    <%= f.label :"#{self_viewq}" %><br>
-    <%= f.select(:self_view, [['Definitely', 5], ['Yeah', 4], ['Sort of', 3], ['Meh', 2], ['Not Really', 1]]) %>
-  </div>
-
+  
   <div class="actions">
     <%= f.submit :"Find Happiness"%>
   </div>

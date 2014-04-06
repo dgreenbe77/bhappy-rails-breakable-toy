@@ -1,4 +1,5 @@
 class Info < ActiveRecord::Base
   belongs_to :user
-  # mount_uploader :image, ImageUploader
+
+  validates :main_post, presence: true
 end

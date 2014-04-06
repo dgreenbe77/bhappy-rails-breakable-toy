@@ -1,22 +1,8 @@
-<%= stylesheet_link_tag "screenshot" %>
-
-<h1 align="center">Happy Form</h1>
+<h1 align="center">Happy Post</h1>
 <br><br>
-
-<div class="camera">
-  <video id="screenshot-stream" class="videostream" autoplay></video>
-  <img id="screenshot" src="">
-  <canvas id="screenshot-canvas" style="display:none;"></canvas>
-  <p>
-    <button class="round" id="screenshot-button">Capture</button> 
-    <button class="round" id="screenshot-stop-button">Stop</button>
-  </p>
-</div>
-
-<%= filepicker_js_include_tag %>
 
 <%= render 'form' %>
 
 <%= link_to 'Back', infos_path %>
 
-<%= javascript_include_tag "snapshot" %>
+<%= filepicker_js_include_tag %>

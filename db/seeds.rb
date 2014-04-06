@@ -7,3 +7,13 @@ Seeders::QuestionSeeder.seed
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# datafile = Rails.root + 'lib/data/positive.txt'
+
+# File.foreach(datafile) do |row|
+#   Positive.find_or_create_by(word: row) do |pos|
+#     pos.word = row.strip
+
+#     puts "Word #{pos.word} processed"
+#   end
+# end

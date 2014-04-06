@@ -11,55 +11,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140402150252) do
+ActiveRecord::Schema.define(version: 20140404053740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "infos", force: true do |t|
-    t.float    "health"
-    t.float    "wealth"
-    t.float    "culture"
-    t.float    "location"
-    t.float    "spirituality"
-    t.float    "relationship"
-    t.float    "activity"
-    t.float    "passion"
-    t.float    "satisfaction"
-    t.float    "self_view"
-    t.string   "url"
+    t.float    "health",             default: 0.0
+    t.float    "wealth",             default: 0.0
+    t.float    "culture",            default: 0.0
+    t.float    "location",           default: 0.0
+    t.float    "spirituality",       default: 0.0
+    t.float    "relationship",       default: 0.0
+    t.float    "activity",           default: 0.0
+    t.float    "passion",            default: 0.0
+    t.float    "satisfaction",       default: 0.0
+    t.float    "self_view",          default: 0.0
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "smile"
     t.string   "image"
+    t.text     "main_post",                        null: false
+    t.float    "positive",           default: 0.0
+    t.float    "negative",           default: 0.0
+    t.text     "why_post"
+    t.float    "positive_scale"
+    t.float    "negative_scale"
+    t.float    "happy_scale"
+    t.float    "health_scale"
+    t.float    "wealth_scale"
+    t.float    "culture_scale"
+    t.float    "location_scale"
+    t.float    "spirituality_scale"
+    t.float    "relationship_scale"
+    t.float    "activity_scale"
+    t.float    "passion_scale"
+    t.float    "satisfaction_scale"
+    t.float    "self_view_scale"
+    t.integer  "happy",              default: 0
   end
 
   create_table "questions", force: true do |t|
-    t.string   "healthq",       null: false
-    t.string   "wealthq",       null: false
-    t.string   "cultureq",      null: false
-    t.string   "locationq",     null: false
-    t.string   "spiritualityq", null: false
-    t.string   "relationshipq", null: false
-    t.string   "activityq",     null: false
-    t.string   "passionq",      null: false
-    t.string   "satisfactionq", null: false
-    t.string   "self_viewq",    null: false
+    t.string   "main_postq", null: false
+    t.string   "why_postq",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "questions", ["activityq"], name: "index_questions_on_activityq", unique: true, using: :btree
-  add_index "questions", ["cultureq"], name: "index_questions_on_cultureq", unique: true, using: :btree
-  add_index "questions", ["healthq"], name: "index_questions_on_healthq", unique: true, using: :btree
-  add_index "questions", ["locationq"], name: "index_questions_on_locationq", unique: true, using: :btree
-  add_index "questions", ["passionq"], name: "index_questions_on_passionq", unique: true, using: :btree
-  add_index "questions", ["relationshipq"], name: "index_questions_on_relationshipq", unique: true, using: :btree
-  add_index "questions", ["satisfactionq"], name: "index_questions_on_satisfactionq", unique: true, using: :btree
-  add_index "questions", ["self_viewq"], name: "index_questions_on_self_viewq", unique: true, using: :btree
-  add_index "questions", ["spiritualityq"], name: "index_questions_on_spiritualityq", unique: true, using: :btree
-  add_index "questions", ["wealthq"], name: "index_questions_on_wealthq", unique: true, using: :btree
+  add_index "questions", ["main_postq"], name: "index_questions_on_main_postq", unique: true, using: :btree
+  add_index "questions", ["why_postq"], name: "index_questions_on_why_postq", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",       null: false
