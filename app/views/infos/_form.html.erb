@@ -15,15 +15,16 @@
 
 <script>
   function helloWorld(event){
-    var url = null;
-    file.forEach(function (array) { url = array['url']} )
     debugger;
+    var url = null;
+    var file = event.fpfiles;
+    url = file.forEach(function (array) { url = array['url']} )
   }
 </script>
 
   <div>
     <%= f.label :image, "Upload Your Avatar:" %>
-    <%= f.filepicker_field :image, class: "round filepicker", onchange: 'helloWorld(event)' %>
+    <%= f.filepicker_field :image, class: "round filepicker", onchange: 'helloWorld(event)', button_text: 'Add Image', dragdrop: true, drag_class: "round dragdrop", services: "COMPUTER, WEBCAM, FACEBOOK, INSTAGRAM, FLICKR, URL, IMAGE_SEARCH, DROPBOX, GMAIL, GOOGLE_DRIVE, BOX, SKYDRIVE, PICASA, GITHUB, EVERNOTE, ALFRESCO, FTP, WEBDAV" %>
   </div>
   <br>
 

@@ -16,7 +16,6 @@ class InfosController < ApplicationController
     end
     gon.infos = @infos.map(&:serializable_hash)
     gon.date = @infos.pluck(:created_at)
-    gon.health = @infos.pluck(:health)
   end
 
   def logs
