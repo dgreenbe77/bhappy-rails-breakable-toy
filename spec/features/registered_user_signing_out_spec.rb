@@ -19,12 +19,4 @@ feature 'authenticated user signing out', %q{
 
   end
 
-  context 'signed out user' do
-
-    # it 'should prevent user from accessing pages' do
-    #   visit index or show
-    # end
-
-  end
-
 end

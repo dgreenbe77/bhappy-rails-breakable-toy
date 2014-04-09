@@ -2,7 +2,6 @@ class CreateQuestions < ActiveRecord::Migration
   def change
     create_table :questions do |t|
       t.string :main_postq, null: false
-      t.string :why_postq, null: false
 
       t.timestamps
     end

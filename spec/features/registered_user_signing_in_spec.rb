@@ -10,6 +10,8 @@ feature 'user trying to sign in', %q{
   # I have to enter in a email
   # I have to enter in a password
   # When I am not signed up I can't visit certain pages
+  # The website redirects me back to the sign up page if I mess up
+  # The website has a sign in button
 
   before(:each) do
     @user = FactoryGirl.create(:user)
@@ -25,7 +27,8 @@ feature 'user trying to sign in', %q{
     end
 
     it "gives you an error message when you don't give it an email" do
-      visit new_user_session_path
+      visit '/'
+      click_on 'Sign In'
       fill_in "Email", with: ""
       fill_in "Password", with: @user.password
       within "#new_user" do

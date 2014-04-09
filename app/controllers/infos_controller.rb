@@ -1,11 +1,11 @@
 class InfosController < ApplicationController
   before_action :set_info, only: [:show, :edit, :update, :destroy]
+  before_action :set_user
 
   def index
   end
 
   def show
-    @user = current_user
     @infos = @user.infos
     unless @info.image.blank?
       uri = URI::encode(@info.image)
@@ -24,7 +24,6 @@ class InfosController < ApplicationController
   end
 
   def logs
-    @user = current_user
     if user_signed_in?
       @infos = @user.infos.order(created_at: :desc)
     else
@@ -41,7 +40,6 @@ class InfosController < ApplicationController
 
   def create
     @info = Info.new(info_params)
-    @user = current_user
     @user.infos << @info
     FacialRecognition.api(@info)
     ['positive', 'negative', 'activity', 'culture', 'health', 'location', 'passion', 
@@ -86,6 +84,10 @@ class InfosController < ApplicationController
   private
     def set_info
       @info = Info.find(params[:id])
+    end
+
+    def set_user
+      @user = current_user
     end
 
     def info_params

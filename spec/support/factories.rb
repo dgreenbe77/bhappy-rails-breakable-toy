@@ -6,9 +6,14 @@ FactoryGirl.define do
   end
 
   factory :info do
-    main_post "hi"
+    main_post "hi a+ happy!"
     address "10 lakeville drive, boston, ma 02184"
-    association :user, factory: :user
+
+    user FactoryGirl.build(:user)
   end
-  
+
+  factory :question do
+    main_postq "Whatz up?"
+  end
+
 end

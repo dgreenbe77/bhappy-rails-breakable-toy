@@ -61,13 +61,11 @@ ActiveRecord::Schema.define(version: 20140406160842) do
 
   create_table "questions", force: true do |t|
     t.string   "main_postq", null: false
-    t.string   "why_postq",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "questions", ["main_postq"], name: "index_questions_on_main_postq", unique: true, using: :btree
-  add_index "questions", ["why_postq"], name: "index_questions_on_why_postq", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",       null: false

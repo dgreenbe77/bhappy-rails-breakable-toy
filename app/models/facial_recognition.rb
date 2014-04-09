@@ -7,9 +7,10 @@ class FacialRecognition
       headers:{
         "X-Mashape-Authorization" => "ddgSpWEIQ6z8NMuVzNHb1gD7MjJjfkyA"
       })
-      face = @response.body["face"]
-      binding.pry
-      info.smile = (face[0]["attribute"]["smiling"]["value"])/20
+      unless @response.body.keys.include?('error')
+        face = @response.body["face"]
+        info.smile = (face[0]["attribute"]["smiling"]["value"])/20
+      end
     end
   end
 
