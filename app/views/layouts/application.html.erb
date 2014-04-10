@@ -4,8 +4,9 @@
   <title>Bhappy - Chart Your Personal Path to Happiness</title>
   <%= include_gon %>
   <link rel="Icon" href="/images/smiley.png">
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= filepicker_js_include_tag %>
   <%= csrf_meta_tags %>
 </head>
 
@@ -31,6 +32,19 @@
     <ul class="left">
       <li><a href="#">Chart</a></li>
     </ul>
+
+      <span class="has-form">
+        <%= form_tag(search_infos_path, method: :get, class: 'large-3 small-3 columns') do %>
+          <div class="row collapse">
+            <div class="large-8 small-8 columns">
+               <%= text_field_tag 'Query', nil, class: '' %>
+            </div>
+            <div class="large-4 small-4 columns">
+              <%= submit_tag 'Search', class: 'alert button expand' %>
+            </div>
+          </div>
+        <% end %>
+      </span>
     
   </div>
 

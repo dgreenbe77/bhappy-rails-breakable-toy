@@ -3,7 +3,7 @@
   <% if @info.errors.any? %>
 
     <div id="error_explanation">
-      <h2><%= pluralize(@info.errors.count, "error") %> prohibited this info from being saved:</h2>
+      <h3><%= pluralize(@info.errors.count, "error") %> Invalid Post:</h3>
       <ul>
       <% @info.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -13,14 +13,14 @@
     
   <% end %>
 
-<script>
-  function helloWorld(event){
-    debugger;
-    var url = null;
-    var file = event.fpfiles;
-    url = file.forEach(function (array) { url = array['url']} )
-  }
-</script>
+  <script>
+    function helloWorld(event){
+      debugger;
+      var url = null;
+      var file = event.fpfiles;
+      url = file.forEach(function (array) { url = array['url']} )
+    }
+  </script>
 
   <div>
     <%= f.label :image, "Take or Upload Your Image for Facial Analysis:" %>
@@ -30,6 +30,11 @@
   <br>
 
   <% offset = rand(Question.count) %>
+
+  <div>
+    <%= f.label "Post Title" %>
+    <%= f.text_area :title %> 
+  </div>
 
   <div>
     <%= f.label "#{Question.first(offset: offset).main_postq}" %>

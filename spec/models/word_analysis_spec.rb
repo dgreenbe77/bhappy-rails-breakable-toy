@@ -23,7 +23,6 @@ describe 'WordAnalysis' do
       info2 = FactoryGirl.create(:info, main_post: 'hi a+ happy hi a+ happy hi a+ happy hi a+ happy hi a+ happy hi a+ happy hi a+ happy hi a+ happy!')
       WordAnalysis.word_analysis(info2, 'positive')
       expect(WordAnalysis.convert_scale_by_deviation(info2, user, 'positive')).to eq(10.0)
-      binding.pry
     end
 
   end

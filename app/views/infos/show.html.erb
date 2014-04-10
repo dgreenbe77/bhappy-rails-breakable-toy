@@ -1,5 +1,60 @@
 <p id="notice"><%= notice %></p>
 
+<h2> Post Data: </h2>
+<h5>  Add Posts to See More Accurate Data </h5>
+
+<div id='chart_div' style='width: 1200px; height: 640px;'></div>
+
+<br><br>
+
+<div id="map_div" style="width: 900px; height: 900;"></div>
+
+<br><br>
+
+<%= simple_form_for(@location) do |r| %>
+  <%= r.select(:region, IsoCountryCodes.for_select) %>
+  <%= r.submit "Change Region" %>
+<% end %>
+
+<%= simple_form_for(@location) do |r| %>
+  <%= r.hidden_field :region, value: "world" %>
+  <%= r.submit "See World" %>
+<% end %>
+
+<div id="donutchart" style="width: 1300px; height: 500px;"></div>
+
+<% unless @info.image == "Add Image" || @info.image.blank? %>
+  <%= filepicker_image_tag @info.image, w: 400, h: 400, fit: 'clip', class: 'center' %>
+  <%= filepicker_save_button "Save", @info.image, "image/jpg" %>
+<% end %>
+
+<p>
+  <strong>Main Post:</strong>
+  <%= @info.main_post %>
+</p>
+
+<% unless @response.nil? %>
+  <h1><%= @response.body["face"] %></h1>
+<% end %>
+
+<p>
+  <strong>Infos:</strong>
+  <%= @infos.map(&:serializable_hash)%>
+</p>
+
+<p>
+  <strong>Happy:</strong>
+  <%= @info.happy_scale %>
+</p>
+
+<p>
+  <strong>Smile:</strong>
+  <%= @info.smile %>
+</p>
+
+<%= link_to 'Edit', edit_info_path(@info) %> |
+<%= link_to 'Back', infos_path %>
+
 <script type='text/javascript' src='jsapi'></script>
 <script type='text/javascript'>
   google.load('visualization', '1', {'packages':['annotatedtimeline']});
@@ -7,18 +62,8 @@
   function drawChart() {
     var data = new google.visualization.DataTable();
     data.addColumn('datetime', 'Date');
-    data.addColumn('number', 'Happy');   
-    data.addColumn('number', 'Img');
-    data.addColumn('number', 'Health');
-    data.addColumn('number', 'Wealth');
-    data.addColumn('number', 'Culture');
-    data.addColumn('number', 'Location');
-    data.addColumn('number', 'Spirit');
-    data.addColumn('number', 'Relations');
-    data.addColumn('number', 'Activity');
-    data.addColumn('number', 'Passion');
-    data.addColumn('number', 'Comfort');
-    data.addColumn('number', 'View');
+    data.addColumn('number', 'Happiness');   
+    data.addColumn('number', 'Image Analysis');
     data.addColumn('string', 'Post');
 
     var date = gon.date;
@@ -26,7 +71,7 @@
     info.forEach( function (arrayItem) {
       for (var i in date) {
         data.addRows([
-         [new Date(Date.parse(date[i])), arrayItem['happy_scale'], arrayItem['smile'], arrayItem['health_scale'], arrayItem['wealth_scale'], arrayItem['culture_scale'], arrayItem['location_scale'], arrayItem['spirituality_scale'], arrayItem['relationship_scale'], arrayItem['activity_scale'], arrayItem['passion_scale'], arrayItem['satisfaction_scale'], arrayItem['self_view_scale'], arrayItem['main_post']]
+         [new Date(Date.parse(date[i])), arrayItem['happy_scale'], arrayItem['smile'], arrayItem['main_post']]
          ]);
       }
     });
@@ -34,7 +79,6 @@
     var options = {
       colors: ['#e0440e', '#FFCC00'],
       displayAnnotations: true,
-      legendPosition: 'newRow',
       max: 10,
       wmode: 'opaque',
       thickness: 2,
@@ -53,20 +97,19 @@
 
   function drawMarkersMap() {
   var info = gon.infos;
-  var data = google.visualization.arrayToDataTable([['City']]);
-  data.addColumn('number', 'Happy');   
-  data.addColumn('number', 'Img');
+  var data = google.visualization.arrayToDataTable([['Location']]);
+  data.addColumn('number', 'Happy Scale');   
 
   info.forEach( function (arrayItem) {
      data.addRows([
-       [arrayItem['address'], arrayItem['happy_scale'], arrayItem['location_scale']]
+       [arrayItem['address'], arrayItem['happy_scale']]
      ]);
   });
 
   var options = {
     region: gon.region,
     displayMode: 'markers',
-    colorAxis: {colors: ['green', 'blue']}
+    colorAxis: {colors: ['blue', 'red']}
   };
 
   var chart = new google.visualization.GeoChart(document.getElementById('map_div'));
@@ -74,99 +117,35 @@
   };
 </script>
 
-<h1> "Post Data" </h1>
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable(
+      [['Factors Mentioned (Scaled From 1-10)']]);
+    data.addColumn('number', 'Scale')
+    
+    var info = gon.current_info
 
-<div id='chart_div' style='width: 1200px; height: 640px;'></div>
+    data.addRows([
+      ['Health', info['health_scale']],
+      ['Wealth', info['wealth_scale']],
+      ['Culture', info['culture_scale']],
+      ['Location', info['location_scale']],
+      ['Spirituality', info['spirituality_scale']],
+      ['Relationship', info['relationship_scale']],
+      ['Activity', info['activity_scale']],
+      ['Passion', info['passion_scale']],
+      ['Satisfaction', info['satisfaction_scale']],
+      ['Self-View', info['self_view_scale']]         
+    ]);
 
-<br><br>
+    var options = {
+      title: 'Factors Mentioned',
+      pieHole: 0.4,
+    };
 
-<div id="map_div" style="width: 600px; height: 600;"></div>
-
-<br><br>
-
-<%= simple_form_for(@location) do |r| %>
-  <%= r.select(:region, IsoCountryCodes.for_select) %>
-  <%= r.submit "Change Region" %>
-<% end %>
-
-<% unless @response.nil? %>
-  <h1><%= @response.body["face"] %></h1>
-<% end %>
-
-<% unless @info.image.blank? %>
-  <%= filepicker_image_tag @info.image, w: 400, h: 400, fit: 'clip', class: 'center' %>
-  <%= filepicker_save_button "Save", @info.image, "image/jpg" %>
-<% end %>
-
-<p>
-  <strong>Infos:</strong>
-  <%= @infos.map(&:serializable_hash)%>
-</p>
-
-<p>
-  <strong>Main Post:</strong>
-  <%= @info.main_post %>
-</p>
-
-<p>
-  <strong>Happy:</strong>
-  <%= @info.happy_scale %>
-</p>
-
-<p>
-  <strong>Smile:</strong>
-  <%= @info.smile %>
-</p>
-
-<p>
-  <strong>Health:</strong>
-  <%= @info.health_scale %>
-</p>
-
-<p>
-  <strong>Wealth:</strong>
-  <%= @info.wealth_scale %>
-</p>
-
-<p>
-  <strong>Culture:</strong>
-  <%= @info.culture_scale %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @info.location_scale %>
-</p>
-
-<p>
-  <strong>Spirituality:</strong>
-  <%= @info.spirituality_scale %>
-</p>
-
-<p>
-  <strong>Relationships:</strong>
-  <%= @info.relationship_scale %>
-</p>
-
-<p>
-  <strong>Activity:</strong>
-  <%= @info.activity_scale %>
-</p>
-
-<p>
-  <strong>Passion:</strong>
-  <%= @info.passion_scale %>
-</p>
-
-<p>
-  <strong>Satisfaction:</strong>
-  <%= @info.satisfaction_scale %>
-</p>
-
-<p>
-  <strong>Self View:</strong>
-  <%= @info.self_view_scale %>
-</p>
-
-<%= link_to 'Edit', edit_info_path(@info) %> |
-<%= link_to 'Back', infos_path %>
+    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    chart.draw(data, options);
+  }
+</script>

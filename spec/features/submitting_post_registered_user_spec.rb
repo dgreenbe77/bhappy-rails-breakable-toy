@@ -19,6 +19,7 @@ feature 'registered user filling out form', %q{
   context "filling out form" do
 
     it 'takes you to the show page when you enter valid information' do
+      fill_in 'info[title]', with: 'Happy Happy Good Post'
       fill_in 'info[main_post]', with: @info.main_post
       fill_in 'info[address]', with: @info.address
       fill_in 'info_image', with: ''
@@ -31,10 +32,12 @@ feature 'registered user filling out form', %q{
     it 'requires a main post and a location' do
       fill_in 'info[main_post]', with: ''
       fill_in 'info[address]', with:''
+      fill_in 'info[title]', with: ''
       click_on 'Find Happiness'
 
       expect(page).to have_content("Main post can't be blank")
       expect(page).to have_content("Address can't be blank")
+      expect(page).to have_content("Title can't be blank")      
       expect(page).to have_content("Happy Post")
     end
 

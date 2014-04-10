@@ -15,20 +15,36 @@ class InfosController < ApplicationController
       })
     end
     @location = Location.new
+    gon.current_info = @info
     gon.infos = @infos.map(&:serializable_hash)
     gon.date = @infos.pluck(:created_at)
-    unless Location.first.blank?
-      gon.region = Location.last.region
+    unless @user.location.blank?
+      gon.region = @user.location.region
     end
     gon.address = @info.address 
   end
 
   def logs
     if user_signed_in?
-      @infos = @user.infos.order(created_at: :desc)
+      @infos = @user.infos.order(created_at: :desc).page params[:page]
     else
       @infos = []
     end
+  end
+
+  def world
+    @infos =  Info.all
+    gon.infos = @infos
+    gon.date = @infos.pluck(:created_at)
+    @location = Location.new
+    unless @user.location.blank?
+      gon.region = @user.location.region
+    end
+  end
+
+  def search
+    query = "%#{params[:Query]}%"
+    @infos = Info.where('main_post like :match or address like :match or title like :match', match: query)
   end
 
   def new
@@ -91,7 +107,7 @@ class InfosController < ApplicationController
     end
 
     def info_params
-      params.require(:info).permit(:address, :main_post, :image)
+      params.require(:info).permit(:address, :main_post, :image, :title)
     end
 
 end

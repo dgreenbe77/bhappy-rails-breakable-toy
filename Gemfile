@@ -9,6 +9,8 @@ gem 'pg'
 
 gem 'simple_form'
 
+gem 'kaminari'
+
 gem 'unirest'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'

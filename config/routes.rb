@@ -1,6 +1,8 @@
 Bhappy::Application.routes.draw do
   devise_for :users
-  resources :infos, path: 'happy'
+  resources :infos, path: 'happy' do
+    get 'search', on: :collection
+  end
   resources :locations
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -9,6 +11,8 @@ Bhappy::Application.routes.draw do
   root 'infos#index'
 
   get 'logs' => 'infos#logs'
+
+  get 'world' => 'infos#world'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
