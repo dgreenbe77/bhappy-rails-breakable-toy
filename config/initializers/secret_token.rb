@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Bhappy::Application.config.secret_key_base = '48dee50b61a15b31f621ec18d148754a7d73c193e6f90c8af8e807faac5b1de9710dc3f585c6d59120a45cc01a20a0622661a2a9852bd8a50022aedef34a40d0'
+Bhappy::Application.config.secret_key_base = ENV['secret_token']

@@ -22,6 +22,6 @@ module Bhappy
     # config.i18n.default_locale = :de
 
     # config.serve_static_assets = true
-    config.filepicker_rails.api_key = 'A3mPX9tZCS5yxhTZDirmHz'
+    config.filepicker_rails.api_key = ENV['filepicker_api_key']
   end
 end

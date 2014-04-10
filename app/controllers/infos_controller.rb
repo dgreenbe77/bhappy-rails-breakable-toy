@@ -7,11 +7,11 @@ class InfosController < ApplicationController
 
   def show
     @infos = @user.infos
-    unless @info.image.blank?
+    unless @info.image.blank? || @info.image == 'Add Image'
       uri = URI::encode(@info.image)
       @response = Unirest::get("https://faceplusplus-faceplusplus.p.mashape.com/detection/detect?url=#{uri}&attribute=glass%2Cpose%2Cgender%2Cage%2Crace%2Csmiling",
       headers:{
-        "X-Mashape-Authorization" => "ddgSpWEIQ6z8NMuVzNHb1gD7MjJjfkyA"
+        "X-Mashape-Authorization" => ENV['face_plus_api_key']
       })
     end
     @location = Location.new
@@ -58,14 +58,10 @@ class InfosController < ApplicationController
     @info = Info.new(info_params)
     @user.infos << @info
     FacialRecognition.api(@info)
-    ['positive', 'negative', 'activity', 'culture', 'health', 'location', 'passion', 
-     'relationship', 'satisfaction', 'self_view', 'spirituality', 'wealth'].each do |kind|
-      WordAnalysis.word_analysis(@info, kind)
-      @info["#{kind}_scale"] = WordAnalysis.convert_scale_by_deviation(@info, @user, kind)
-    end
+    WordAnalysis.init(@info, @user)
+    WordAnalysis.count_and_scale
     @info.happy = @info.positive_scale - @info.negative_scale
-    @info.happy_scale = WordAnalysis.convert_scale_by_deviation(@info, @user, 'happy')
-
+    @info.happy_scale = WordAnalysis.convert_scale_by_deviation('happy')
     respond_to do |format|
       if @info.save
         format.html { redirect_to @info }
